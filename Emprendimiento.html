@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Remoto de Compuertas de Energía</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .compuertas {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: #3498db;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+        }
+
+        .rayo {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, yellow, transparent);
+            animation: animarRayo 1s infinite;
+        }
+
+        @keyframes animarRayo {
+            0% { left: -50px; }
+            100% { left: 100%; }
+        }
+
+        button {
+            background-color: #2ecc71;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px; /* Espaciado entre los botones */
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Estilos para la barra de carga */
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: none; /* Oculta la barra de carga inicialmente */
+        }
+
+        .progress {
+            width: 0;
+            height: 20px;
+            background-color: #2ecc71; /* Cambia el color de la barra de carga a verde */
+            border-radius: 5px;
+            animation: cargar 2s ease-out; /* Animación de la barra de carga */
+        }
+
+        @keyframes cargar {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        .abrir .progress-bar,
+        .cerrar .progress-bar {
+            display: block; /* Muestra la barra de carga cuando se abre o cierra */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard de Compuertas de Energía</h1>
+        <button onclick="abrirCompuertas()">Abrir Compuertas</button>
+        <button onclick="cerrarCompuertas()">Cerrar Compuertas</button>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="compuertas">
+            <div class="rayo"></div>
+        </div>
+        <p>Estado: <span id="status">Cerradas</span></p>
+    </div>
+
+    <script>
+        function abrirCompuertas() {
+            var compuertas = document.querySelector('.compuertas');
+            var progressBar = document.querySelector('.progress-bar');
+            compuertas.classList.add('abrir');
+            progressBar.style.width = '0%'; // Restablece la barra de progreso
+            progressBar.style.display = 'block'; // Muestra la barra de carga
+            document.getElementById('status').innerText = 'Abriendo';
+            setTimeout(() => {
+                progressBar.style.width = '100%'; // Llena la barra de progreso
+                document.getElementById('status').innerText = 'Abiertas';
+                progressBar.style.display = 'none'; // Oculta la barra de carga
+            }, 2000); // Simula un tiempo de apertura de 2 segundos
+        }
+
+        function cerrarCompuertas() {
+            var compuertas = document.querySelector('.compuertas');
+            var progressBar = document.querySelector('.progress-bar');
+            compuertas.classList.remove('abrir');
+            progressBar.style.width = '0%'; // Restablece la barra de progreso
+            progressBar.style.display = 'block'; // Muestra la barra de carga
+            document.getElementById('status').innerText = 'Cerrando';
+            setTimeout(() => {
+                progressBar.style.width = '100%'; // Llena la barra de progreso
+                document.getElementById('status').innerText = 'Cerradas';
+                progressBar.style.display = 'none'; // Oculta la barra de carga
+            }, 2000); // Simula un tiempo de cierre de 2 segundos
+        }
+    </script>
+</body>
+</html>
+
+
